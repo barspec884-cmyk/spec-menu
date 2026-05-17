@@ -305,7 +305,10 @@ function renderSubNav(){
 
   // 2nd level
   if(curCat==='whisky'&&curSub==='JAPAN'){
-    buildSub2(JP_PREFS.map(([c,j])=>({id:c,label:j,has:DATA.some(d=>d.cat==='whisky'&&d.cty==='JAPAN'&&d.area===c)})));
+    const EXTRA_AREAS=[{id:'BLENDED',label:'ブレンデッド'},{id:'SERVE',label:'サーブ'},{id:'COLLAB',label:'コラボ'},{id:'WORLD_BLEND',label:'ワールドブレンド'}];
+    const prefItems=JP_PREFS.map(([c,j])=>({id:c,label:j,has:DATA.some(d=>d.cat==='whisky'&&d.cty==='JAPAN'&&d.area===c)}));
+    const extraItems=EXTRA_AREAS.map(a=>({id:a.id,label:a.label,has:DATA.some(d=>d.cat==='whisky'&&d.cty==='JAPAN'&&d.area===a.id)})).filter(a=>a.has);
+    buildSub2([...prefItems,...extraItems]);
   } else if(curCat==='whisky'&&curSub==='SCOTLAND'){
     buildSub2(SCOTCH_AREAS.map(a=>({id:a.id,label:a.jp,has:DATA.some(d=>d.cat==='whisky'&&d.cty==='SCOTLAND'&&d.area===a.id)})));
   }
@@ -382,7 +385,7 @@ function renderItems(){
     if(gkey&&gkey!==lastGroup){
       let label=gkey;
       if(curCat==='whisky'&&curSub==='ALL'){const w=W_COUNTRIES.find(x=>x.id===gkey);label=w?w.jp+' / '+w.en:gkey;}
-      else if(curCat==='whisky'&&curSub==='JAPAN'){label=JP_PREF_MAP[gkey]||gkey;}
+      else if(curCat==='whisky'&&curSub==='JAPAN'){const JP_EXTRA={BLENDED:'ブレンデッド',SERVE:'サーブ',COLLAB:'コラボ',WORLD_BLEND:'ワールドブレンド'};label=JP_PREF_MAP[gkey]||JP_EXTRA[gkey]||gkey;}
       else if(curCat==='whisky'&&curSub==='SCOTLAND'){const s=SCOTCH_AREAS.find(x=>x.id===gkey);label=s?s.jp:gkey;}
       else if(curCat==='cocktail'){label=BASE_LABELS[gkey]||gkey;}
       html+='<div class="sec">'+label+'</div>';
