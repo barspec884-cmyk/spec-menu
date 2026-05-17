@@ -9,70 +9,94 @@
 --txt:#F0EDE6;--muted:#777;--red:#CC3333;--redbg:#2A1010;
 --bdr:rgba(255,255,255,0.08);--gdim:rgba(201,168,76,0.15)}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;min-height:100vh}
+body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif}
+
 /* Header */
 .hdr{background:var(--dark);padding:14px 18px 10px;position:sticky;top:0;z-index:100;border-bottom:1px solid var(--gold)}
-.hdr-t{font-size:20px;letter-spacing:.15em;color:var(--gold);font-weight:300}
-.hdr-s{font-size:10px;color:var(--muted);margin-top:2px}
+.hdr-t{font-size:20px;letter-spacing:.15em;color:var(--gold);font-weight:300;
+  cursor:pointer;user-select:none;-webkit-user-select:none;display:inline-block}
+.hdr-t.pressing{opacity:.6;transition:opacity .1s}
+.hdr-sub{font-size:10px;color:var(--muted);margin-top:2px}
 .surcharge{font-size:10px;color:var(--muted);margin-top:5px;padding-top:5px;border-top:1px solid var(--bdr)}
-/* Search bar */
+
+/* Staff mode indicator */
+.staff-bar{display:none;background:rgba(201,168,76,0.12);border-bottom:1px solid var(--gold);
+  padding:5px 18px;font-size:10px;color:var(--gold);letter-spacing:.06em;text-align:center}
+.staff-bar.show{display:block}
+.price-filter{display:none;gap:6px;overflow-x:auto;padding:8px 18px;background:var(--sur2);
+  border-bottom:1px solid var(--bdr);scrollbar-width:none}
+.price-filter::-webkit-scrollbar{display:none}
+body.staff-mode .price-filter{display:flex}
+.pfil{flex-shrink:0;padding:5px 12px;border-radius:16px;font-size:11px;
+  border:1px solid var(--bdr);color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .2s}
+.pfil.active{border-color:var(--gold);color:var(--gold);background:var(--gdim)}
+
+/* Search */
 .search-box{padding:10px 18px;background:var(--sur2);border-bottom:1px solid var(--bdr)}
 .search-input{width:100%;background:var(--sur);border:1px solid var(--bdr);border-radius:8px;
-padding:9px 14px;color:var(--txt);font-size:13px;outline:none}
+  padding:9px 14px;color:var(--txt);font-size:13px;outline:none}
 .search-input:focus{border-color:var(--gold)}
 .search-input::placeholder{color:var(--muted)}
-/* Price filter */
-.price-filter{display:flex;gap:6px;overflow-x:auto;padding:8px 18px;background:var(--sur2);
-border-bottom:1px solid var(--bdr);scrollbar-width:none}
-.price-filter::-webkit-scrollbar{display:none}
-.pfil{flex-shrink:0;padding:5px 12px;border-radius:16px;font-size:11px;
-border:1px solid var(--bdr);color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .2s}
-.pfil.active{border-color:var(--gold);color:var(--gold);background:var(--gdim)}
-/* Main tabs */
+
+/* Cat tabs */
 .cat-tabs{display:flex;overflow-x:auto;background:var(--dark);padding:0 10px;
-scrollbar-width:none;border-bottom:2px solid var(--bdr)}
+  scrollbar-width:none;border-bottom:2px solid var(--bdr)}
 .cat-tabs::-webkit-scrollbar{display:none}
 .ctab{flex-shrink:0;padding:10px 13px;font-size:11px;color:var(--muted);cursor:pointer;
-border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:color .2s;letter-spacing:.03em}
+  border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:color .2s}
 .ctab.active{color:var(--gold);border-bottom-color:var(--gold)}
+
 /* Sub nav */
 .sub-nav{display:flex;overflow-x:auto;background:var(--sur);padding:0 10px;
-scrollbar-width:none;border-bottom:1px solid var(--bdr);min-height:34px}
+  scrollbar-width:none;border-bottom:1px solid var(--bdr);min-height:34px}
 .sub-nav::-webkit-scrollbar{display:none}
 .snav{flex-shrink:0;padding:7px 11px;font-size:11px;color:var(--muted);cursor:pointer;
-border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .2s}
+  border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .2s}
 .snav.active{color:var(--gold);border-bottom-color:var(--gold)}
+
 /* Intro */
 .intro{padding:12px 18px;background:var(--sur2);border-bottom:1px solid var(--bdr);display:none}
 .intro.show{display:block}
 .intro h2{font-size:13px;color:var(--gold);font-weight:500;margin-bottom:4px}
 .intro p{font-size:11px;color:var(--muted);line-height:1.7}
-/* Item list */
+
+/* Items */
 .list{padding:2px 0 90px}
-.item{display:flex;align-items:flex-start;padding:11px 18px;border-bottom:1px solid var(--bdr);gap:10px}
+.item{display:flex;align-items:flex-start;padding:12px 18px;border-bottom:1px solid var(--bdr);gap:10px}
 .item.so{background:var(--redbg)}
-.item.hidden{display:none}
 .info{flex:1;min-width:0}
 .nj{font-size:13px;line-height:1.4}
 .so .nj{text-decoration:line-through;color:var(--muted)}
 .ne{font-size:11px;color:var(--muted);margin-top:2px}
 .so-badge{font-size:9px;font-weight:700;color:var(--red);background:rgba(204,51,51,.15);
-padding:2px 6px;border-radius:3px;margin-top:3px;display:inline-block;letter-spacing:.04em}
+  padding:2px 6px;border-radius:3px;margin-top:3px;display:inline-block}
 .base-badge{display:inline-block;font-size:9px;padding:1px 6px;border-radius:3px;
-margin-bottom:2px;background:var(--gdim);color:var(--gold);letter-spacing:.04em}
-.price{flex-shrink:0;font-size:13px;font-weight:600;color:var(--gold);white-space:nowrap;padding-top:1px}
+  margin-bottom:2px;background:var(--gdim);color:var(--gold)}
+
+/* Price — hidden by default, shown in staff mode */
+.price{flex-shrink:0;font-size:13px;font-weight:600;color:var(--gold);
+  white-space:nowrap;padding-top:1px;display:none}
+body.staff-mode .price{display:block}
+
 .sec{padding:6px 18px;font-size:9px;letter-spacing:.1em;color:var(--gold);
-background:var(--sur);border-bottom:1px solid var(--bdr);border-top:1px solid var(--bdr);margin-top:6px}
+  background:var(--sur);border-bottom:1px solid var(--bdr);border-top:1px solid var(--bdr);margin-top:6px}
 .count{font-size:10px;color:var(--muted);padding:5px 18px 2px}
 .empty{padding:36px 18px;text-align:center;color:var(--muted);font-size:12px}
+
+/* Long press progress ring on header */
+.hdr-t{position:relative}
+.press-ring{position:absolute;bottom:-2px;left:0;height:2px;width:0;
+  background:var(--gold);transition:none;border-radius:1px}
 </style>
 </head>
 <body>
+
 <div class="hdr">
-  <div class="hdr-t">DRINK MENU</div>
-  <div class="hdr-s">Bar SPEC</div>
+  <div class="hdr-t" id="logoBtn">Bar SPEC<div class="press-ring" id="pressRing"></div></div>
+  <div class="hdr-sub">DRINK MENU</div>
   <div class="surcharge">ストレート以外 +¥100 / ¥100 surcharge for non-neat serves</div>
 </div>
+<div class="staff-bar" id="staffBar">STAFF MODE — 価格表示中 / Price visible &nbsp;（もう一度長押しで解除）</div>
 <div class="search-box">
   <input class="search-input" type="search" id="searchInput" placeholder="銘柄を検索 / Search..." oninput="onSearch(this.value)">
 </div>
@@ -87,6 +111,54 @@ const DATA=[{"cat":"beer","cty":"JAPANESE","area":"","pref":"","dist":"","nj":"�
 const JP_PREFS=[["HOKKAIDO", "北海道"], ["AOMORI", "青森"], ["IWATE", "岩手"], ["MIYAGI", "宮城"], ["AKITA", "秋田"], ["YAMAGATA", "山形"], ["FUKUSHIMA", "福島"], ["IBARAKI", "茨城"], ["TOCHIGI", "栃木"], ["GUNMA", "群馬"], ["SAITAMA", "埼玉"], ["CHIBA", "千葉"], ["TOKYO", "東京"], ["KANAGAWA", "神奈川"], ["NIIGATA", "新潟"], ["TOYAMA", "富山"], ["ISHIKAWA", "石川"], ["FUKUI", "福井"], ["YAMANASHI", "山梨"], ["NAGANO", "長野"], ["GIFU", "岐阜"], ["SHIZUOKA", "静岡"], ["AICHI", "愛知"], ["MIE", "三重"], ["SHIGA", "滋賀"], ["KYOTO", "京都"], ["OSAKA", "大阪"], ["HYOGO", "兵庫"], ["NARA", "奈良"], ["WAKAYAMA", "和歌山"], ["TOTTORI", "鳥取"], ["SHIMANE", "島根"], ["OKAYAMA", "岡山"], ["HIROSHIMA", "広島"], ["YAMAGUCHI", "山口"], ["TOKUSHIMA", "徳島"], ["KAGAWA", "香川"], ["EHIME", "愛媛"], ["KOCHI", "高知"], ["FUKUOKA", "福岡"], ["SAGA", "佐賀"], ["NAGASAKI", "長崎"], ["KUMAMOTO", "熊本"], ["OITA", "大分"], ["MIYAZAKI", "宮崎"], ["KAGOSHIMA", "鹿児島"], ["OKINAWA", "沖縄"]];
 const JP_PREF_MAP=Object.fromEntries(JP_PREFS);
 
+// ── Staff mode: long press on logo (3 seconds) ──
+let pressTimer=null, pressStart=0;
+const logoBtn=document.getElementById('logoBtn');
+const pressRing=document.getElementById('pressRing');
+const staffBar=document.getElementById('staffBar');
+let staffMode=false;
+
+function startPress(){
+  pressStart=Date.now();
+  pressRing.style.transition='none';
+  pressRing.style.width='0';
+  logoBtn.classList.add('pressing');
+  requestAnimationFrame(animPress);
+  pressTimer=setTimeout(()=>{
+    staffMode=!staffMode;
+    document.body.classList.toggle('staff-mode',staffMode);
+    staffBar.classList.toggle('show',staffMode);
+    pressRing.style.width='0';
+    logoBtn.classList.remove('pressing');
+    // スタッフモード解除時は価格フィルターをリセット
+    if(!staffMode){
+      curPrice='ALL';
+      document.querySelectorAll('.pfil').forEach(x=>x.classList.remove('active'));
+      document.querySelector('.pfil')?.classList.add('active');
+    }
+    renderItems();
+  },3000);
+}
+function animPress(){
+  if(!pressTimer) return;
+  const elapsed=Date.now()-pressStart;
+  const pct=Math.min(elapsed/3000*100,100);
+  pressRing.style.width=pct+'%';
+  if(pct<100) requestAnimationFrame(animPress);
+}
+function endPress(){
+  if(pressTimer){clearTimeout(pressTimer);pressTimer=null;}
+  pressRing.style.width='0';
+  logoBtn.classList.remove('pressing');
+}
+logoBtn.addEventListener('mousedown',startPress);
+logoBtn.addEventListener('touchstart',e=>{e.preventDefault();startPress();},{passive:false});
+logoBtn.addEventListener('mouseup',endPress);
+logoBtn.addEventListener('mouseleave',endPress);
+logoBtn.addEventListener('touchend',endPress);
+logoBtn.addEventListener('touchcancel',endPress);
+
+// ── Data & config ──
 const CATS=[
   {id:'whisky',   jp:'ウイスキー', en:'Whisky'},
   {id:'gin',      jp:'ジン',       en:'Gin'},
@@ -100,66 +172,73 @@ const CATS=[
   {id:'spirits_other',jp:'スピリッツ',en:'Spirits'},
   {id:'nonal',    jp:'ノンアル',   en:'Non-Alc'},
 ];
-
 const W_COUNTRIES=[
-  {id:'JAPAN',    jp:'日本',         en:'Japanese Whisky',
-    desc:'北海道から九州まで各地の蒸留所が個性を表現。水・気候・原料が全く異なるため多彩なスタイルが生まれる。',
-    desc_en:'Each distillery expresses its own terroir — from Hokkaido to Kyushu.'},
-  {id:'SCOTLAND', jp:'スコッチ',     en:'Scotch Whisky',
-    desc:'スコットランド6大産地それぞれが異なるキャラクター。スペイサイドの華やかさ、アイラの強烈なピート香など。',
-    desc_en:'Six regions, each with distinctive character — floral Speyside, peaty Islay, and more.'},
-  {id:'IRELAND',  jp:'アイリッシュ', en:'Irish Whiskey',
-    desc:'3回蒸留が特徴のなめらかなスタイル。',desc_en:'Triple-distilled for smooth approachability.'},
-  {id:'USA',      jp:'アメリカン',   en:'American Whiskey',
-    desc:'バーボン・テネシー・ライなど。新樽熟成のバニラ・キャラメルが特徴。',
-    desc_en:'Bourbon, Tennessee, Rye — new oak aging brings vanilla and caramel.'},
-  {id:'CANADA',   jp:'カナディアン', en:'Canadian Whisky',
-    desc:'軽快でブレンドしやすいスタイル。',desc_en:'Light and blendable.'},
+  {id:'JAPAN',   jp:'日本',        en:'Japanese Whisky',
+   desc:'北海道から九州まで各地の蒸留所が個性を表現。水・気候・原料が全く異なるため多彩なスタイルが生まれる。',
+   desc_en:'Each distillery expresses its own terroir — from Hokkaido to Kyushu.'},
+  {id:'SCOTLAND',jp:'スコッチ',    en:'Scotch Whisky',
+   desc:'スコットランド6大産地それぞれが異なるキャラクター。スペイサイドの華やかさ、アイラの強烈なピート香など。',
+   desc_en:'Six regions — floral Speyside, peaty Islay, robust Highland, and more.'},
+  {id:'IRELAND', jp:'アイリッシュ',en:'Irish Whiskey',
+   desc:'3回蒸留が特徴のなめらかなスタイル。',desc_en:'Triple-distilled for smooth approachability.'},
+  {id:'USA',     jp:'アメリカン',  en:'American Whiskey',
+   desc:'バーボン・テネシー・ライなど。新樽熟成のバニラ・キャラメルが特徴。',
+   desc_en:'Bourbon, Tennessee, Rye — new oak aging brings vanilla and caramel.'},
+  {id:'CANADA',  jp:'カナディアン',en:'Canadian Whisky',
+   desc:'軽快でブレンドしやすいスタイル。',desc_en:'Light and blendable.'},
 ];
-
 const SCOTCH_AREAS=[
-  {id:'SPEYSIDE',   jp:'Speyside',   en:'Speyside'},
-  {id:'HIGHLAND',   jp:'Highland',   en:'Highland'},
-  {id:'ISLAY',      jp:'Islay',      en:'Islay'},
-  {id:'ISLANDS',    jp:'Islands',    en:'Islands'},
-  {id:'LOWLAND',    jp:'Lowland',    en:'Lowland'},
-  {id:'CAMPBELTOWN',jp:'Campbeltown',en:'Campbeltown'},
-  {id:'BLENDED',    jp:'Blended',    en:'Blended Scotch'},
+  {id:'SPEYSIDE',   jp:'Speyside'},  {id:'HIGHLAND',    jp:'Highland'},
+  {id:'ISLAY',      jp:'Islay'},     {id:'ISLANDS',     jp:'Islands'},
+  {id:'LOWLAND',    jp:'Lowland'},   {id:'CAMPBELTOWN', jp:'Campbeltown'},
+  {id:'BLENDED',    jp:'Blended'},
 ];
-
 const BASE_LABELS={
   GIN:'Gin',VODKA:'Vodka',WHISKY:'Whisky',RUM:'Rum',TEQUILA:'Tequila',
   BRANDY:'Brandy',LIQUEUR:'Liqueur',WINE:'Wine',BEER:'Beer',COFFEE:'Coffee',MOCKTAIL:'Mocktail'
 };
 const BASE_ORDER=['GIN','VODKA','WHISKY','RUM','TEQUILA','BRANDY','LIQUEUR','WINE','BEER','COFFEE','MOCKTAIL'];
 
+let curCat='whisky', curSub='ALL', curSub2='ALL', curSearch='';
+
 const PRICE_FILTERS=[
-  {id:'ALL',  label:'すべて',     max:99999},
-  {id:'1500', label:'〜¥1,500',  max:1500},
-  {id:'2000', label:'〜¥2,000',  max:2000},
-  {id:'3000', label:'〜¥3,000',  max:3000},
-  {id:'5000', label:'〜¥5,000',  max:5000},
-  {id:'UP',   label:'¥5,001〜',  min:5001},
+  {id:'ALL',  label:'すべて',    max:99999},
+  {id:'1500', label:'〜¥1,500', max:1500},
+  {id:'2000', label:'〜¥2,000', max:2000},
+  {id:'3000', label:'〜¥3,000', max:3000},
+  {id:'5000', label:'〜¥5,000', max:5000},
+  {id:'UP',   label:'¥5,001〜', min:5001},
 ];
+let curPrice='ALL';
 
-let curCat='whisky', curSub='ALL', curPrice='ALL', curSearch='', curSub2='ALL';
-
-function init(){
-  // Price filters
+function initPriceFilter(){
   const pf=document.getElementById('priceFilter');
   PRICE_FILTERS.forEach(f=>{
     const d=document.createElement('div');
     d.className='pfil'+(f.id==='ALL'?' active':'');
     d.textContent=f.label;
-    d.onclick=()=>{curPrice=f.id;document.querySelectorAll('.pfil').forEach(x=>x.classList.remove('active'));d.classList.add('active');renderItems();};
+    d.onclick=()=>{
+      curPrice=f.id;
+      document.querySelectorAll('.pfil').forEach(x=>x.classList.remove('active'));
+      d.classList.add('active');
+      renderItems();
+    };
     pf.appendChild(d);
   });
+}
 
-  // Cat tabs
+function priceOk(price){
+  const f=PRICE_FILTERS.find(x=>x.id===curPrice);
+  if(!f||f.id==='ALL') return true;
+  if(f.min) return price>=f.min;
+  return price<=f.max;
+}
+
+function init(){
+  initPriceFilter();
   const tabs=document.getElementById('catTabs');
   CATS.forEach(c=>{
-    const n=DATA.filter(d=>d.cat===c.id).length;
-    if(!n) return;
+    if(!DATA.some(d=>d.cat===c.id)) return;
     const t=document.createElement('div');
     t.className='ctab'+(c.id===curCat?' active':'');
     t.textContent=c.jp+' / '+c.en;
@@ -177,76 +256,64 @@ function onSearch(val){
 function selectCat(id){
   curCat=id; curSub='ALL'; curSub2='ALL';
   document.querySelectorAll('.ctab').forEach(t=>{
-    const c=CATS.find(x=>x.jp+' / '+x.en===t.textContent||x.id===id);
-    t.classList.toggle('active',t.textContent.startsWith(CATS.find(x=>x.id===id)?.jp||''));
+    const c=CATS.find(x=>x.jp+' / '+x.en===t.textContent);
+    t.classList.toggle('active', c&&c.id===id);
   });
-  // fix active tab
-  document.querySelectorAll('.ctab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.ctab').forEach(t=>{if(t.textContent===CATS.find(x=>x.id===id)?.jp+' / '+CATS.find(x=>x.id===id)?.en)t.classList.add('active');});
   renderSubNav(); renderIntro(); renderItems();
 }
 
 function renderSubNav(){
-  const nav=document.getElementById('subNav');
-  nav.innerHTML='';
-  let groups=[];
+  document.getElementById('subNav').innerHTML='';
+  const old2=document.getElementById('sub2Nav');
+  if(old2) old2.remove();
 
+  let groups=[];
   if(curCat==='whisky'){
     groups=[{id:'ALL',label:'すべて / All'},...W_COUNTRIES
       .filter(w=>DATA.some(d=>d.cat==='whisky'&&d.cty===w.id))
-      .map(w=>{return{id:w.id,label:w.jp+' / '+w.en}})];
+      .map(w=>({id:w.id,label:w.jp+' / '+w.en}))];
   } else if(curCat==='gin'){
-    groups=[{id:'ALL',label:'すべて / All'},{id:'JAPAN',label:'Japanese Gin'},{id:'WORLD',label:'World Gin'}]
+    groups=[{id:'ALL',label:'すべて / All'},
+      {id:'JAPAN',label:'Japanese Gin'},{id:'WORLD',label:'World Gin'}]
       .filter(g=>g.id==='ALL'||DATA.some(d=>d.cat==='gin'&&d.cty===g.id));
   } else if(curCat==='cocktail'){
     groups=[{id:'ALL',label:'すべて / All'},...BASE_ORDER
       .filter(b=>DATA.some(d=>d.cat==='cocktail'&&d.area===b))
-      .map(b=>{return{id:b,label:BASE_LABELS[b]||b}})];
+      .map(b=>({id:b,label:BASE_LABELS[b]||b}))];
   } else if(curCat==='beer'){
-    groups=[{id:'ALL',label:'すべて / All'},{id:'JAPANESE',label:'Japanese'},{id:'SCOTLAND',label:'International'}]
+    groups=[{id:'ALL',label:'すべて / All'},
+      {id:'JAPANESE',label:'Japanese'},{id:'SCOTLAND',label:'International'}]
       .filter(g=>g.id==='ALL'||DATA.some(d=>d.cat==='beer'&&d.cty===g.id));
-  } else {
-    groups=[];
   }
 
+  const nav=document.getElementById('subNav');
   groups.forEach(g=>{
     const t=document.createElement('div');
     t.className='snav'+(curSub===g.id?' active':'');
     t.textContent=g.label;
-    t.onclick=()=>{curSub=g.id;curSub2='ALL';renderSubNav();renderSub2Nav();renderIntro();renderItems();};
+    t.onclick=()=>{curSub=g.id;curSub2='ALL';renderSubNav();renderIntro();renderItems();};
     nav.appendChild(t);
   });
 
-  renderSub2Nav();
+  // 2nd level
+  if(curCat==='whisky'&&curSub==='JAPAN'){
+    buildSub2(JP_PREFS.map(([c,j])=>({id:c,label:j,has:DATA.some(d=>d.cat==='whisky'&&d.cty==='JAPAN'&&d.area===c)})));
+  } else if(curCat==='whisky'&&curSub==='SCOTLAND'){
+    buildSub2(SCOTCH_AREAS.map(a=>({id:a.id,label:a.jp,has:DATA.some(d=>d.cat==='whisky'&&d.cty==='SCOTLAND'&&d.area===a.id)})));
+  }
 }
 
-function renderSub2Nav(){
-  // 2nd level: JP都道府県 or Scotch産地
-  const existing=document.getElementById('sub2Nav');
-  if(existing) existing.remove();
-
-  let groups2=[];
-  if(curCat==='whisky' && curSub==='JAPAN'){
-    const hasItems=JP_PREFS.filter(([code])=>DATA.some(d=>d.cat==='whisky'&&d.cty==='JAPAN'&&d.area===code));
-    const noItems=JP_PREFS.filter(([code])=>!DATA.some(d=>d.cat==='whisky'&&d.cty==='JAPAN'&&d.area===code));
-    groups2=[{id:'ALL',label:'すべて',hasItem:true},...hasItems.map(([c,j])=>{return{id:c,label:j,hasItem:true}}),...noItems.map(([c,j])=>{return{id:c,label:j,hasItem:false}})];
-  } else if(curCat==='whisky' && curSub==='SCOTLAND'){
-    groups2=[{id:'ALL',label:'すべて'},...SCOTCH_AREAS
-      .map(a=>{return{id:a.id,label:a.jp,hasItem:DATA.some(d=>d.cat==='whisky'&&d.cty==='SCOTLAND'&&d.area===a.id)}})];
-  }
-
-  if(!groups2.length) return;
-
+function buildSub2(items){
   const nav2=document.createElement('div');
   nav2.id='sub2Nav';
   nav2.style.cssText='display:flex;overflow-x:auto;background:#1a1a1a;padding:0 10px;scrollbar-width:none;border-bottom:1px solid var(--bdr);min-height:32px';
-  groups2.forEach(g=>{
+  [{id:'ALL',label:'すべて',has:true},...items].forEach(g=>{
     const t=document.createElement('div');
-    t.style.cssText='flex-shrink:0;padding:6px 10px;font-size:10px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .2s;letter-spacing:.02em';
-    t.style.color=curSub2===g.id?'var(--gold)':(g.hasItem?'#888':'#444');
+    t.style.cssText='flex-shrink:0;padding:6px 10px;font-size:10px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .2s';
+    t.style.color=curSub2===g.id?'var(--gold)':(g.has?'#888':'#3a3a3a');
     if(curSub2===g.id) t.style.borderBottomColor='var(--gold)';
-    t.textContent=g.label+(g.hasItem===false?' (-)':'');
-    t.onclick=()=>{curSub2=g.id;renderSub2Nav();renderItems();};
+    t.textContent=g.has?g.label:g.label+' -';
+    t.onclick=()=>{curSub2=g.id;buildSub2(items);renderItems();};
     nav2.appendChild(t);
   });
   document.getElementById('subNav').insertAdjacentElement('afterend',nav2);
@@ -254,7 +321,7 @@ function renderSub2Nav(){
 
 function renderIntro(){
   const box=document.getElementById('intro');
-  if(curCat==='whisky' && curSub!=='ALL'){
+  if(curCat==='whisky'&&curSub!=='ALL'){
     const w=W_COUNTRIES.find(x=>x.id===curSub);
     if(w){
       box.innerHTML='<h2>'+w.jp+' — '+w.en+'</h2><p>'+w.desc+'</p><p style="margin-top:4px">'+w.desc_en+'</p>';
@@ -264,26 +331,16 @@ function renderIntro(){
   box.classList.remove('show'); box.innerHTML='';
 }
 
-function priceOk(price){
-  const f=PRICE_FILTERS.find(x=>x.id===curPrice);
-  if(!f||f.id==='ALL') return true;
-  if(f.min) return price>=f.min;
-  return price<=f.max;
-}
-
-function searchOk(item){
-  if(!curSearch) return true;
-  return item.nj.toLowerCase().includes(curSearch)||
-         item.ne.toLowerCase().includes(curSearch)||
-         (item.pref||'').toLowerCase().includes(curSearch)||
-         (item.area||'').toLowerCase().includes(curSearch);
-}
-
 function renderItems(){
   const items=DATA.filter(d=>{
     if(d.cat!==curCat) return false;
-    if(curSearch) return searchOk(d);
     if(!priceOk(d.p)) return false;
+    if(curSearch){
+      return d.nj.toLowerCase().includes(curSearch)||
+             d.ne.toLowerCase().includes(curSearch)||
+             (d.pref||'').toLowerCase().includes(curSearch)||
+             (d.area||'').toLowerCase().includes(curSearch);
+    }
     if(curSub!=='ALL'){
       if(curCat==='whisky'&&d.cty!==curSub) return false;
       if(curCat==='gin'&&d.cty!==curSub) return false;
@@ -295,31 +352,23 @@ function renderItems(){
       if(curCat==='whisky'&&curSub==='SCOTLAND'&&d.area!==curSub2) return false;
     }
     return true;
-  }).sort((a,b)=>{if(a.so!==b.so)return a.so?1:-1;return a.nj.localeCompare(b.nj,"ja");});
+  }).sort((a,b)=>{if(a.so!==b.so)return a.so?1:-1;return a.nj.localeCompare(b.nj,'ja');});
 
   const list=document.getElementById('list');
-  if(!items.length){
-    list.innerHTML='<div class="empty">該当する銘柄がありません / No items found</div>';
-    return;
-  }
+  if(!items.length){list.innerHTML='<div class="empty">該当する銘柄がありません / No items found</div>';return;}
 
   let html='<div class="count">'+items.length+' アイテム</div>';
   let lastGroup=null;
 
   items.forEach(item=>{
     let gkey='';
-    if(curSearch){
-      gkey='';
-    } else if(curCat==='whisky'){
-      if(curSub==='ALL') gkey=item.cty;
-      else if(curSub2==='ALL') gkey=item.area||item.pref||'';
-      else gkey='';
-    } else if(curCat==='cocktail'&&curSub==='ALL'){
-      gkey=item.area;
-    } else if(curCat==='beer'){
-      gkey=item.cty;
-    } else if(curCat==='gin'){
-      gkey=item.cty;
+    if(!curSearch){
+      if(curCat==='whisky'){
+        if(curSub==='ALL') gkey=item.cty;
+        else if(curSub2==='ALL') gkey=item.area||'';
+      } else if(curCat==='cocktail'&&curSub==='ALL') gkey=item.area;
+      else if(curCat==='beer') gkey=item.cty;
+      else if(curCat==='gin') gkey=item.cty;
     }
 
     if(gkey&&gkey!==lastGroup){
@@ -332,8 +381,7 @@ function renderItems(){
       lastGroup=gkey;
     }
 
-    const soClass=item.so?' so':'';
-    html+='<div class="item'+soClass+'">';
+    html+='<div class="item'+(item.so?' so':'')+'">';
     html+='<div class="info">';
     if(curCat==='cocktail'&&curSub==='ALL'&&item.area)
       html+='<div class="base-badge">'+(BASE_LABELS[item.area]||item.area)+'</div>';
