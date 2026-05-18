@@ -201,6 +201,12 @@ const SCOTCH_AREAS=[
   {id:'LOWLAND',    jp:'Lowland'},   {id:'CAMPBELTOWN', jp:'Campbeltown'},
   {id:'BLENDED',    jp:'Blended'},
 ];
+const AMERICAN_AREAS=[
+  {id:'KENTUCKY',   jp:'ケンタッキー'},
+  {id:'TENNESSEE',  jp:'テネシー'},
+  {id:'AMERICAN',   jp:'AMERICAN'},
+  {id:'RYE',        jp:'ライ'},
+];
 const BASE_LABELS={
   GIN:'Gin',VODKA:'Vodka',WHISKY:'Whisky',RUM:'Rum',TEQUILA:'Tequila',
   BRANDY:'Brandy',LIQUEUR:'Liqueur',WINE:'Wine',BEER:'Beer',COFFEE:'Coffee',MOCKTAIL:'Mocktail'
@@ -311,6 +317,8 @@ function renderSubNav(){
     buildSub2([...prefItems,...extraItems]);
   } else if(curCat==='whisky'&&curSub==='SCOTLAND'){
     buildSub2(SCOTCH_AREAS.map(a=>({id:a.id,label:a.jp,has:DATA.some(d=>d.cat==='whisky'&&d.cty==='SCOTLAND'&&d.area===a.id)})));
+  } else if(curCat==='whisky'&&curSub==='USA'){
+    buildSub2(AMERICAN_AREAS.map(a=>({id:a.id,label:a.jp,has:DATA.some(d=>d.cat==='whisky'&&d.cty==='USA'&&d.area===a.id)})));
   }
 }
 
@@ -363,6 +371,7 @@ function renderItems(){
     if(curSub2!=='ALL'){
       if(curCat==='whisky'&&curSub==='JAPAN'&&d.area!==curSub2) return false;
       if(curCat==='whisky'&&curSub==='SCOTLAND'&&d.area!==curSub2) return false;
+      if(curCat==='whisky'&&curSub==='USA'&&d.area!==curSub2) return false;
     }
     return true;
   }).sort((a,b)=>{if(a.so!==b.so)return a.so?1:-1;return a.nj.localeCompare(b.nj,'ja');});
@@ -389,6 +398,7 @@ function renderItems(){
       if(curCat==='whisky'&&curSub==='ALL'){const w=W_COUNTRIES.find(x=>x.id===gkey);label=w?w.jp+' / '+w.en:gkey;}
       else if(curCat==='whisky'&&curSub==='JAPAN'){const JP_EXTRA={BLENDED:'ブレンデッド',SERVE:'サーブ',COLLAB:'コラボ',WORLD_BLEND:'ワールドブレンド'};label=JP_PREF_MAP[gkey]||JP_EXTRA[gkey]||gkey;}
       else if(curCat==='whisky'&&curSub==='SCOTLAND'){const s=SCOTCH_AREAS.find(x=>x.id===gkey);label=s?s.jp:gkey;}
+      else if(curCat==='whisky'&&curSub==='USA'){const a=AMERICAN_AREAS.find(x=>x.id===gkey);label=a?a.jp:gkey;}
       else if(curCat==='cocktail'){label=BASE_LABELS[gkey]||gkey;}
       html+='<div class="sec">'+label+'</div>';
       lastGroup=gkey;
